@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz</title>
+  <link rel="icon" type="image/png" href="image/IMG_2616.ico">
+  <style>
+    /* style.css */
+body {
+  background-image: url("image/qzz.png");
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  text-align: center;
+  padding: 20px;
+}
+
+.quiz-container {
+  background: #fff;
+  padding: 125px;
+  border-radius: 20px;
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: auto;
+}
+
+h1 {
+  color: #333;
+}
+
+#quiz {
+  margin-top: 20px;
+}
+
+#question {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.choices button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.choices button:hover {
+  background: #eee;
+}
+
+#feedback {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h2>Quiz Game Develop By Asif</h2>
+    <div id="quiz">
+      <div id="question"></div>
+      <div class="choices">
+        <button class="choice" onclick="selectAnswer(0)">A</button>
+        <button class="choice" onclick="selectAnswer(1)">B</button>
+        <button class="choice" onclick="selectAnswer(2)">C</button>
+        <button class="choice" onclick="selectAnswer(3)">D</button>
+      </div>
+      <div id="feedback"></div>
+      <button id="next-button" onclick="nextQuestion()">Next</button>
+    </div>
+    <div id="score-container" class="hidden">
+      <h2>Quiz Completed!</h2>
+      <p id="score"></p>
+    </div>
+    <a href="quiz.html"><button >Play Again</button></a>
+  </div>
+  <script>// script.js
+
+    const questions = [
+      {
+        question: "What is the capital of France?",
+        choices: ["Berlin", "Madrid", "Paris", "Rome"],
+        correct: 2
+      },
+      {
+        question: "Which language is used to style web pages?",
+        choices: ["HTML", "CSS", "JavaScript", "Python"],
+        correct: 1
+      },
+      {
+        question: "Which year did JavaScript first appear?",
+        choices: ["1993", "1995", "1997", "1999"],
+        correct: 1
+      },
+      {
+        question: "Where born Asif",
+        choices: ["Mumbai","Khalilbad","Lucknow","Basti"],
+        correct: 1
+      }
+    ];
+    
+    let currentQuestionIndex = 0;
+    let score = 0;
+    
+    function showQuestion() {
+      const question = questions[currentQuestionIndex];
+      document.getElementById("question").textContent = question.question;
+    
+      const choiceButtons = document.querySelectorAll(".choice");
+      question.choices.forEach((choice, index) => {
+        choiceButtons[index].textContent = choice;
+      });
+    
+      document.getElementById("feedback").textContent = "";
+      document.getElementById("next-button").style.display = "none";
+    }
+    
+    function selectAnswer(choiceIndex) {
+      const question = questions[currentQuestionIndex];
+      const feedback = document.getElementById("feedback");
+    
+      if (choiceIndex === question.correct) {
+        score++;
+        feedback.textContent = "Correct!";
+        feedback.style.color = "green";
+      } else {
+        feedback.textContent = "Wrong!";
+        feedback.style.color = "red";
+      }
+    
+      document.getElementById("next-button").style.display = "block";
+    }
+    
+    function nextQuestion() {
+      currentQuestionIndex++;
+    
+      if (currentQuestionIndex < questions.length) {
+        showQuestion();
+      } else {
+        showScore();
+      }
+    }
+    
+    function showScore() {
+      document.getElementById("quiz").classList.add("hidden");
+      const scoreContainer = document.getElementById("score-container");
+      scoreContainer.classList.remove("hidden");
+    
+      document.getElementById("score").textContent = `Your score is ${score} out of ${questions.length}`;
+    }
+    
+    // Initialize game
+    showQuestion();
+    </script>
+</body>
+</html>
